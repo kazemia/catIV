@@ -1,0 +1,41 @@
+Package: catIV
+Title: Instrumental Variable Analysis with a Categorical Treatment
+Version: 0.0.0.9000
+Authors@R:
+    person("Amir Aamodt", "Kazemi", email = "amirhosk@uio.no",
+           role = c("aut", "cre"))
+Description: Identification and estimation of local average treatment effects
+    and conditional average treatment effects when an ordinal instrument
+    affects the choice of a categorical treatment. Implements the adherence
+    set framework and the categorical monotonicity assumption, the resulting
+    identification of local average treatment responses and effects, target
+    trial style descriptions of the identified populations, and estimators
+    that combine instrumental and covariate information for heterogeneous
+    treatment effects.
+URL: https://github.com/kazemia/catIV, https://kazemia.github.io/catIV/
+BugReports: https://github.com/kazemia/catIV/issues
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Depends:
+    R (>= 4.1)
+Imports:
+    doParallel,
+    doRNG,
+    foreach,
+    iterators,
+    MASS,
+    marginaleffects,
+    nnet,
+    parallel,
+    stats,
+    utils
+Suggests:
+    knitr,
+    mgcv,
+    randomForest,
+    rmarkdown,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Config/testthat/edition: 3

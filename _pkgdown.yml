@@ -1,0 +1,68 @@
+url: https://kazemia.github.io/catIV/
+
+template:
+  bootstrap: 5
+
+reference:
+- title: Describing the design
+  desc: >
+    Enumerate the adherence sets a decision team could hold, and record which
+    treatment each one receives under each value of the instrument.
+  contents:
+  - adherence_sets
+  - choose_treatment
+  - response_matrix
+
+- title: Identification
+  desc: >
+    Work out which contrasts the instrument can identify, and which
+    subpopulation each identified effect applies to.
+  contents:
+  - projection_matrices
+  - solve_b_pairs
+  - solve_b_treatments
+  - target_populations
+
+- title: Estimation
+  desc: >
+    Estimate the observable quantities from data, with or without covariate
+    adjustment, and combine them into local effects.
+  contents:
+  - estimate_p_z
+  - estimate_q_z
+  - estimate_v_z
+  - estimate_p_sigma
+  - estimate_p_sigma_treatments
+  - estimate_late
+  - estimate_latr
+  - naive_iv
+
+- title: Inference and interpretation
+  desc: >
+    Bootstrap confidence intervals, and the weighted pseudo-population that
+    describes the target trial an estimate emulates.
+  contents:
+  - bootstrap_late
+  - pseudo_population
+
+- title: Heterogeneous treatment effects
+  desc: >
+    Conditional versions of the estimators, and the estimator combining
+    instrumental with covariate information.
+  contents:
+  - conditional_p_z
+  - conditional_p_sigma
+  - conditional_latr
+  - confounded_response
+  - hiv_cate
+  - hiv_contrast
+  - average_contrast
+
+- title: Simulation
+  desc: >
+    Data-generating processes for checking estimators against a known truth.
+  contents:
+  - simulate_adherence
+  - simulate_categorical
+  - simulate_binary
+  - binary_iv_truth

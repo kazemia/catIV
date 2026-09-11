@@ -1,0 +1,12 @@
+# Store every text file with LF in the repository and check it out with LF,
+# regardless of each contributor's core.autocrlf setting. R CMD check expects
+# LF line endings in package sources, and the CI workflows run on Linux.
+* text=auto eol=lf
+
+# Never touch binary formats.
+*.png binary
+*.jpg binary
+*.pdf binary
+*.rda binary
+*.RData binary
+*.rds binary

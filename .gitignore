@@ -1,0 +1,23 @@
+# R session state
+.Rhistory
+.RData
+.Rproj.user/
+.Ruserdata
+
+# RStudio project files
+*.Rproj
+
+# Build artefacts
+*.tar.gz
+*.Rcheck/
+..Rcheck/
+
+# Built vignettes and the rendered pkgdown site. The site is built and
+# deployed by the pkgdown workflow, so it does not belong in the source tree.
+inst/doc/
+docs/
+
+# OS and editor noise
+.DS_Store
+Thumbs.db
+*~
