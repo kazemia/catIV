@@ -20,6 +20,42 @@ identified effect applies to.
 The methods come from three papers on comparing TNF-α inhibitors for
 rheumatoid arthritis, using national drug-price rankings as the instrument.
 
+## Citation
+
+If you use `catIV`, please cite the paper the relevant method comes from.
+
+**Identification with a categorical treatment** — the adherence set framework,
+categorical monotonicity, and the identification of local average treatment
+effects:
+
+> Kazemi AA, Olsen IC. Instrumental variable analysis with categorical
+> treatment. *Statistical Methods in Medical Research*. 2024;33(11–12):2043–2061.
+> doi:[10.1177/09622802241281960](https://doi.org/10.1177/09622802241281960)
+
+**The clinical application and the target trial interpretation** — comparing
+five TNF-α inhibitors as first biologic treatment:
+
+> Kazemi AA, Kristianslund EK, Sexton J, Fagerli KM, Provan SA, Olsen IC.
+> A head-to-head comparison of TNF-α inhibitors as the first biologic
+> treatment of rheumatoid arthritis. *Rheumatology*. 2026;65(2):keag007.
+> doi:[10.1093/rheumatology/keag007](https://doi.org/10.1093/rheumatology/keag007)
+
+**Heterogeneous treatment effects** — the conditional estimators and the
+combined instrumental/covariate estimator behind `hiv_cate()`:
+
+> Kazemi AA, Sexton J, Olsen IC. Heterogeneous treatment effect estimation
+> with instrumental variable methods. Manuscript; paper III in the thesis
+> below.
+
+All three are collected in:
+
+> Kazemi AA. *Causal Inference with Instrumental Variables Affecting the
+> Choice of a Categorical Treatment*. PhD thesis, Institute of Basic Medical
+> Sciences, University of Oslo; 2026.
+> [Public defence](https://www.med.uio.no/imb/english/research/news-and-events/events/disputations/2026/kazemi-amir.html)
+
+From R, `citation("catIV")` gives these in BibTeX form.
+
 ## Installation
 
 ```r

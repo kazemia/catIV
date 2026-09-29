@@ -1,0 +1,81 @@
+citHeader(
+  "catIV implements the methods from three papers. Please cite the one the ",
+  "method you used comes from; the thesis collects all three."
+)
+
+bibentry(
+  bibtype  = "Article",
+  title    = "Instrumental variable analysis with categorical treatment",
+  author   = c(person("Amir Aamodt", "Kazemi"),
+               person("Inge Christoffer", "Olsen")),
+  journal  = "Statistical Methods in Medical Research",
+  year     = "2024",
+  volume   = "33",
+  number   = "11-12",
+  pages    = "2043--2061",
+  doi      = "10.1177/09622802241281960",
+  textVersion = paste(
+    "Kazemi AA, Olsen IC (2024).",
+    "Instrumental variable analysis with categorical treatment.",
+    "Statistical Methods in Medical Research, 33(11-12), 2043-2061.",
+    "doi:10.1177/09622802241281960"
+  ),
+  header = "Identification with a categorical treatment:"
+)
+
+bibentry(
+  bibtype  = "Article",
+  title    = paste("A head-to-head comparison of TNF-α inhibitors as the",
+                   "first biologic treatment of rheumatoid arthritis"),
+  author   = c(person("Amir Aamodt", "Kazemi"),
+               person("Eirik Klami", "Kristianslund"),
+               person("Joseph", "Sexton"),
+               person("Karen Minde", "Fagerli"),
+               person("Sella Aarrestad", "Provan"),
+               person("Inge Christoffer", "Olsen")),
+  journal  = "Rheumatology",
+  year     = "2026",
+  volume   = "65",
+  number   = "2",
+  pages    = "keag007",
+  doi      = "10.1093/rheumatology/keag007",
+  textVersion = paste(
+    "Kazemi AA, Kristianslund EK, Sexton J, Fagerli KM, Provan SA,",
+    "Olsen IC (2026). A head-to-head comparison of TNF-alpha inhibitors as",
+    "the first biologic treatment of rheumatoid arthritis.",
+    "Rheumatology, 65(2), keag007. doi:10.1093/rheumatology/keag007"
+  ),
+  header = "Clinical application and the target trial interpretation:"
+)
+
+bibentry(
+  bibtype  = "Unpublished",
+  title    = paste("Heterogeneous treatment effect estimation with",
+                   "instrumental variable methods"),
+  author   = c(person("Amir Aamodt", "Kazemi"),
+               person("Joseph", "Sexton"),
+               person("Inge Christoffer", "Olsen")),
+  year     = "2026",
+  note     = "Manuscript; paper III of the thesis below",
+  textVersion = paste(
+    "Kazemi AA, Sexton J, Olsen IC (2026).",
+    "Heterogeneous treatment effect estimation with instrumental variable",
+    "methods. Manuscript; paper III of the thesis below."
+  ),
+  header = "Heterogeneous treatment effects:"
+)
+
+bibentry(
+  bibtype  = "PhdThesis",
+  title    = paste("Causal Inference with Instrumental Variables Affecting",
+                   "the Choice of a Categorical Treatment"),
+  author   = person("Amir Aamodt", "Kazemi"),
+  school   = "Institute of Basic Medical Sciences, University of Oslo",
+  year     = "2026",
+  textVersion = paste(
+    "Kazemi AA (2026). Causal Inference with Instrumental Variables",
+    "Affecting the Choice of a Categorical Treatment.",
+    "PhD thesis, Institute of Basic Medical Sciences, University of Oslo."
+  ),
+  header = "All three papers are collected in:"
+)
