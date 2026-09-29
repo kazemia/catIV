@@ -74,21 +74,17 @@ population and <code><a href="estimate_late.html">estimate_late()</a></code> the
 is:</p>
 <table class="table table"><tr><td><strong>Paper code</strong></td><td><strong>catIV</strong></td><td><strong>Notes</strong></td></tr><tr><td><code>GenerateA()</code></td><td><code><a href="adherence_sets.html">adherence_sets()</a></code></td><td></td></tr><tr><td><code>T_decider()</code></td><td><code><a href="choose_treatment.html">choose_treatment()</a></code></td><td></td></tr><tr><td><code>MakeR()</code></td><td><code><a href="response_matrix.html">response_matrix()</a></code></td><td></td></tr><tr><td><code>MakeKB()</code></td><td><code><a href="projection_matrices.html">projection_matrices()</a></code></td><td>list elements <code>B_t</code>, <code>B_t_i</code> are now <code>B</code>, <code>B_plus</code></td></tr><tr><td><code>KbSolver()</code></td><td><code><a href="solve_b_pairs.html">solve_b_pairs()</a></code></td><td>papers 1 and 2, indexed by treatment pairs</td></tr><tr><td><code>KbSolver()</code></td><td><code><a href="solve_b_treatments.html">solve_b_treatments()</a></code></td><td>paper 3, indexed by single treatments</td></tr><tr><td><code>PiIdentifier()</code></td><td><code><a href="target_populations.html">target_populations()</a></code></td><td></td></tr><tr><td><code>MakeP_Z()</code></td><td><code><a href="estimate_p_z.html">estimate_p_z()</a></code></td><td></td></tr><tr><td><code>MakeQ_Z()</code></td><td><code><a href="estimate_q_z.html">estimate_q_z()</a></code></td><td></td></tr><tr><td><code>MakeV_Z()</code></td><td><code><a href="estimate_v_z.html">estimate_v_z()</a></code></td><td></td></tr><tr><td><code>P_SigmaIdentifier()</code></td><td><code><a href="estimate_p_sigma.html">estimate_p_sigma()</a></code></td><td><code>E1</code>, <code>E2</code>, <code>WA</code> are now <code>arm1</code>, <code>arm2</code>, <code>average</code></td></tr><tr><td><code>P_SigmaIdentifier()</code></td><td><code><a href="estimate_p_sigma_treatments.html">estimate_p_sigma_treatments()</a></code></td><td>the paper 3 variant</td></tr><tr><td><code>LATEIdentifier()</code></td><td><code><a href="estimate_late.html">estimate_late()</a></code></td><td><code>RR</code> and <code>AverageProb</code> are now <code>scale</code> and <code>denominator</code></td></tr><tr><td><code>LATOIdentifier()</code></td><td><code><a href="estimate_latr.html">estimate_latr()</a></code></td><td></td></tr></table></div>
     <div class="section level2">
-    <h2 id="differences-from-the-paper-code">Differences from the paper code<a class="anchor" aria-label="anchor" href="#differences-from-the-paper-code"></a></h2>
+    <h2 id="conventions">Conventions<a class="anchor" aria-label="anchor" href="#conventions"></a></h2>
 
 
-<p>The results are numerically identical to the published code, but a few
-conventions changed:</p><ul><li><p><code>P_Z</code> and <code>Q_Z</code> are returned as matrices with the instrument values as
-row names, rather than as data frames whose first column holds the
-instrument. Nothing now depends on column position.</p></li>
+<ul><li><p><code>P_Z</code> and <code>Q_Z</code> are matrices with the instrument values as row names, so
+nothing depends on column position.</p></li>
 <li><p>The solvers always return a matrix. A contrast with no identifiable
-effect gives a matrix with zero rows rather than a bare vector.</p></li>
+effect gives a matrix with zero rows.</p></li>
 <li><p>Solutions are named by the adherence sets they select, for example
-<code>"A4+A7"</code>, so results are addressed by meaning rather than by position.
-Solution order therefore differs from the paper code, and index-based
-references such as <code>Pi_index = 1</code> do not carry over.</p></li>
-<li><p>Every instrument value must be observed in the data. The paper code
-silently produced a shorter <code>P_Z</code> in that situation.</p></li>
+<code>"A4+A7"</code>, so results are addressed by meaning rather than by position.</p></li>
+<li><p>Every instrument value must be observed in the data, so that the rows of
+<code>P_Z</code> line up with the rows of the response matrix.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -100,7 +96,8 @@ silently produced a shorter <code>P_Z</code> in that situation.</p></li>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
     <p><strong>Maintainer</strong>: Amir Aamodt Kazemi <a href="mailto:amirhosk@uio.no">amirhosk@uio.no</a></p>
-    </div>
+<p>Authors:</p><ul><li><p>Amir Aamodt Kazemi <a href="mailto:amirhosk@uio.no">amirhosk@uio.no</a></p></li>
+</ul></div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>

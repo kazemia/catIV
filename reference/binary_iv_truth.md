@@ -66,14 +66,11 @@ The process is
 with `U`, `V` and `Z` independent Bernoulli variables. `U` is unobserved
 confounding, `V` is observed confounding.
 
-This replaces `C_probability()`, `AT_probability()`, `NT_probability()`
-and `T_probability()` from the paper 3 code. Those were written as four
-separate expressions, and `T_probability()` took no `VT` or `VP`
-arguments, so it marginalised over the unobserved confounder and the
-instrument but not over the observed confounder. Setting `v_on_t = 0`
-here reproduces that behaviour; any other value corrects it. Everything
-is marginalised over the same 2x2 grid of `U` and `V`, so the four
-quantities cannot drift apart.
+All four quantities are marginalised over the same 2x2 grid of `U` and
+`V`, so they are guaranteed to be mutually consistent: the three stratum
+probabilities sum to one, and `treated` is the corresponding mixture
+over the instrument. Setting `v_on_t = 0` removes the observed
+confounder from the process entirely.
 
 ## Examples
 

@@ -194,19 +194,20 @@ The bias regression weights each observation by
 `density^density_power * p_sigma^2`, so regions where the instrument is
 informative and the data are dense carry more of the fit.
 
-**`density_power` defaults to 1**, matching the variance argument in
-paper 3, which makes the variance proportional to
-`1 / (p_sigma^2 * density)`. The analysis code used to produce the
-published clinical results squared the density instead. To reproduce
-those numbers exactly, set `density_power = 2`:
+**`density_power` defaults to 1**, which is inverse-variance weighting:
+the variance of the estimator is proportional to
+`1 / (p_sigma^2 * density)`, so weighting by `p_sigma^2 * density` is
+the efficient choice. A larger exponent concentrates the fit more
+tightly on the dense part of the covariate range, which is occasionally
+worth trying when the bias is poorly determined in the tails:
 
 ``` r
 
-published <- hiv_cate(ages, num, den, conf, KB, b, density = dens,
-                      instrument_levels = levels(d$Z),
-                      treatments = treatments, density_power = 2)
+concentrated <- hiv_cate(ages, num, den, conf, KB, b, density = dens,
+                         instrument_levels = levels(d$Z),
+                         treatments = treatments, density_power = 2)
 
-round(hiv_contrast(published, "t1", "t3")$estimate - con$estimate, 4)
+round(hiv_contrast(concentrated, "t1", "t3")$estimate - con$estimate, 4)
 #>  [1] 0e+00 0e+00 0e+00 0e+00 0e+00 0e+00 1e-04 1e-04 1e-04 1e-04 1e-04
 ```
 

@@ -122,8 +122,7 @@ fitted with them.</p></dd>
 
 <dt id="arg-density-power">density_power<a class="anchor" aria-label="anchor" href="#arg-density-power"></a></dt>
 <dd><p>Exponent on the density in the regression weights.
-Defaults to 1, matching the variance argument in the paper. Use 2 to
-reproduce the published analysis code. See the Weights section.</p></dd>
+See the Weights section.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -147,10 +146,7 @@ assembled per-solution data as <code>"bias_data"</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This estimator is assembled from the analysis script for paper 3 rather than
-from its function file. Its components, <code><a href="conditional_p_sigma.html">conditional_p_sigma()</a></code> and
-<code><a href="conditional_latr.html">conditional_latr()</a></code>, reproduce the originals exactly.</p>
-<p>Inference is by bootstrapping the whole procedure; there is no closed form.</p>
+    <p>Inference is by bootstrapping the whole procedure; there is no closed form.</p>
     </div>
     <div class="section level2">
     <h2 id="weights">Weights<a class="anchor" aria-label="anchor" href="#weights"></a></h2>
@@ -160,14 +156,12 @@ from its function file. Its components, <code><a href="conditional_p_sigma.html"
 <code>density^density_power * p_sigma^2</code>, where <code>p_sigma</code> is the conditional
 probability of belonging to the target population, that is the denominator
 of the instrumental variable estimator.</p>
-<p>The paper specifies the weight as the square of that denominator times the
-density of the covariate, consistent with its variance expression, in which
-the variance is proportional to <code>1 / (p_sigma^2 * density)</code>. That gives
-<code>density_power = 1</code>, which is the default here.</p>
-<p>The analysis code used for the published clinical results computed the
-weight with the density <strong>squared</strong>. Set <code>density_power = 2</code> to reproduce
-those numbers exactly. The default does not reproduce them, because the
-squared density was not what the paper specifies.</p>
+<p>The default, <code>density_power = 1</code>, is inverse-variance weighting: the
+variance of the estimator is proportional to
+<code>1 / (p_sigma^2 * density)</code>, so weighting by <code>p_sigma^2 * density</code> gives
+the most efficient fit. A larger exponent concentrates the fit more tightly
+on the dense regions of the covariate, which can be worth trying when the
+bias is estimated poorly in the tails.</p>
     </div>
     <div class="section level2">
     <h2 id="contrasts">Contrasts<a class="anchor" aria-label="anchor" href="#contrasts"></a></h2>

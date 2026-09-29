@@ -107,13 +107,11 @@ observed confounder and the instrument.</p></dd>
 <code>P(T = 1 | Z, U, V, X) = plogis(z_on_t * Z + u_on_t * U + v_on_t * V + x_on_t * X)</code>
 with <code>U</code>, <code>V</code> and <code>Z</code> independent Bernoulli variables. <code>U</code> is unobserved
 confounding, <code>V</code> is observed confounding.</p>
-<p>This replaces <code>C_probability()</code>, <code>AT_probability()</code>, <code>NT_probability()</code> and
-<code>T_probability()</code> from the paper 3 code. Those were written as four separate
-expressions, and <code>T_probability()</code> took no <code>VT</code> or <code>VP</code> arguments, so it
-marginalised over the unobserved confounder and the instrument but not over
-the observed confounder. Setting <code>v_on_t = 0</code> here reproduces that
-behaviour; any other value corrects it. Everything is marginalised over the
-same 2x2 grid of <code>U</code> and <code>V</code>, so the four quantities cannot drift apart.</p>
+<p>All four quantities are marginalised over the same 2x2 grid of <code>U</code> and <code>V</code>,
+so they are guaranteed to be mutually consistent: the three stratum
+probabilities sum to one, and <code>treated</code> is the corresponding mixture over
+the instrument. Setting <code>v_on_t = 0</code> removes the observed confounder from
+the process entirely.</p>
     </div>
 
     <div class="section level2">

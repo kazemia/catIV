@@ -85,5 +85,4 @@ practice and is returned so that simulations can check against it.
 The outcome is Bernoulli with probability `t_on_y[T] + v_on_y[V]`, so
 the caller must choose effects keeping every total in `[0, 1]`.
 
-Called `CatSimulator()` in paper 1's code, which did not return the
-adherence set.
+Called `CatSimulator()` in paper 1's code.

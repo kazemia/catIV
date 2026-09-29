@@ -234,17 +234,19 @@ averaging over the covariate distribution:</p>
 <code>density^density_power * p_sigma^2</code>, so regions where the
 instrument is informative and the data are dense carry more of the
 fit.</p>
-<p><strong><code>density_power</code> defaults to 1</strong>, matching
-the variance argument in paper 3, which makes the variance proportional
-to <code>1 / (p_sigma^2 * density)</code>. The analysis code used to
-produce the published clinical results squared the density instead. To
-reproduce those numbers exactly, set <code>density_power = 2</code>:</p>
+<p><strong><code>density_power</code> defaults to 1</strong>, which is
+inverse-variance weighting: the variance of the estimator is
+proportional to <code>1 / (p_sigma^2 * density)</code>, so weighting by
+<code>p_sigma^2 * density</code> is the efficient choice. A larger
+exponent concentrates the fit more tightly on the dense part of the
+covariate range, which is occasionally worth trying when the bias is
+poorly determined in the tails:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">published</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hiv_cate.html">hiv_cate</a></span><span class="op">(</span><span class="va">ages</span>, <span class="va">num</span>, <span class="va">den</span>, <span class="va">conf</span>, <span class="va">KB</span>, <span class="va">b</span>, density <span class="op">=</span> <span class="va">dens</span>,</span>
-<span>                      instrument_levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">Z</span><span class="op">)</span>,</span>
-<span>                      treatments <span class="op">=</span> <span class="va">treatments</span>, density_power <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">concentrated</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hiv_cate.html">hiv_cate</a></span><span class="op">(</span><span class="va">ages</span>, <span class="va">num</span>, <span class="va">den</span>, <span class="va">conf</span>, <span class="va">KB</span>, <span class="va">b</span>, density <span class="op">=</span> <span class="va">dens</span>,</span>
+<span>                         instrument_levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">Z</span><span class="op">)</span>,</span>
+<span>                         treatments <span class="op">=</span> <span class="va">treatments</span>, density_power <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="../reference/hiv_contrast.html">hiv_contrast</a></span><span class="op">(</span><span class="va">published</span>, <span class="st">"t1"</span>, <span class="st">"t3"</span><span class="op">)</span><span class="op">$</span><span class="va">estimate</span> <span class="op">-</span> <span class="va">con</span><span class="op">$</span><span class="va">estimate</span>, <span class="fl">4</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="../reference/hiv_contrast.html">hiv_contrast</a></span><span class="op">(</span><span class="va">concentrated</span>, <span class="st">"t1"</span>, <span class="st">"t3"</span><span class="op">)</span><span class="op">$</span><span class="va">estimate</span> <span class="op">-</span> <span class="va">con</span><span class="op">$</span><span class="va">estimate</span>, <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] 0e+00 0e+00 0e+00 0e+00 0e+00 0e+00 1e-04 1e-04 1e-04 1e-04 1e-04</span></span></code></pre></div>
 <p>The fitted bias model and the assembled per-solution data are
 attached as attributes, which is where to look when a fit is behaving

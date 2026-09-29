@@ -78,6 +78,8 @@ The numerator `Q_Z(t, X)` is formed by multiplying the modelled outcome
 means `E(Y | Z, T, X)` by the modelled treatment probabilities
 `P(T | Z, X)`, then projecting through `b B_t^+`, exactly as in the
 unconditional case. Neither model is a local estimator, so the variance
-expression in the paper is an approximation here.
+expression used to derive the weights in
+[`hiv_cate()`](https://kazemia.github.io/catIV/reference/hiv_cate.md) is
+an approximation in this setting.
 
 Called `CIV_estimator()` in the paper 3 code.
