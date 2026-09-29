@@ -56,7 +56,8 @@ The numerator \code{Q_Z(t, X)} is formed by multiplying the modelled outcome
 means \code{E(Y | Z, T, X)} by the modelled treatment probabilities
 \code{P(T | Z, X)}, then projecting through \verb{b B_t^+}, exactly as in the
 unconditional case. Neither model is a local estimator, so the variance
-expression in the paper is an approximation here.
+expression used to derive the weights in \code{\link[=hiv_cate]{hiv_cate()}} is an approximation
+in this setting.
 
 Called \code{CIV_estimator()} in the paper 3 code.
 }

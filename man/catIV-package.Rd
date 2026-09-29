@@ -53,22 +53,17 @@ is:
 }
 }
 
-\section{Differences from the paper code}{
+\section{Conventions}{
 
-The results are numerically identical to the published code, but a few
-conventions changed:
 \itemize{
-\item \code{P_Z} and \code{Q_Z} are returned as matrices with the instrument values as
-row names, rather than as data frames whose first column holds the
-instrument. Nothing now depends on column position.
+\item \code{P_Z} and \code{Q_Z} are matrices with the instrument values as row names, so
+nothing depends on column position.
 \item The solvers always return a matrix. A contrast with no identifiable
-effect gives a matrix with zero rows rather than a bare vector.
+effect gives a matrix with zero rows.
 \item Solutions are named by the adherence sets they select, for example
 \code{"A4+A7"}, so results are addressed by meaning rather than by position.
-Solution order therefore differs from the paper code, and index-based
-references such as \code{Pi_index = 1} do not carry over.
-\item Every instrument value must be observed in the data. The paper code
-silently produced a shorter \code{P_Z} in that situation.
+\item Every instrument value must be observed in the data, so that the rows of
+\code{P_Z} line up with the rows of the response matrix.
 }
 }
 
@@ -83,6 +78,11 @@ Useful links:
 }
 \author{
 \strong{Maintainer}: Amir Aamodt Kazemi \email{amirhosk@uio.no}
+
+Authors:
+\itemize{
+  \item Amir Aamodt Kazemi \email{amirhosk@uio.no}
+}
 
 }
 \keyword{internal}

@@ -73,8 +73,7 @@ simulate_binary <- function(n, z_on_t, v_on_t, v_on_y, t_on_y, logit = FALSE) {
 #' The outcome is Bernoulli with probability `t_on_y[T] + v_on_y[V]`, so the
 #' caller must choose effects keeping every total in `[0, 1]`.
 #'
-#' Called `CatSimulator()` in paper 1's code, which did not return the
-#' adherence set.
+#' Called `CatSimulator()` in paper 1's code.
 #'
 #' @export
 simulate_adherence <- function(n, instrument, sets, treatments, v_levels,

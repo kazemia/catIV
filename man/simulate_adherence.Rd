@@ -60,6 +60,5 @@ that an estimator recovers a known truth.
 The outcome is Bernoulli with probability \code{t_on_y[T] + v_on_y[V]}, so the
 caller must choose effects keeping every total in \verb{[0, 1]}.
 
-Called \code{CatSimulator()} in paper 1's code, which did not return the
-adherence set.
+Called \code{CatSimulator()} in paper 1's code.
 }

@@ -22,8 +22,7 @@
 #' @param instrument,treatment,covariate Column names as the models were
 #'   fitted with them.
 #' @param density_power Exponent on the density in the regression weights.
-#'   Defaults to 1, matching the variance argument in the paper. Use 2 to
-#'   reproduce the published analysis code. See the Weights section.
+#'   See the Weights section.
 #'
 #' @return A data frame with one row per covariate value and treatment:
 #'   \describe{
@@ -42,25 +41,18 @@
 #' probability of belonging to the target population, that is the denominator
 #' of the instrumental variable estimator.
 #'
-#' The paper specifies the weight as the square of that denominator times the
-#' density of the covariate, consistent with its variance expression, in which
-#' the variance is proportional to `1 / (p_sigma^2 * density)`. That gives
-#' `density_power = 1`, which is the default here.
-#'
-#' The analysis code used for the published clinical results computed the
-#' weight with the density **squared**. Set `density_power = 2` to reproduce
-#' those numbers exactly. The default does not reproduce them, because the
-#' squared density was not what the paper specifies.
+#' The default, `density_power = 1`, is inverse-variance weighting: the
+#' variance of the estimator is proportional to
+#' `1 / (p_sigma^2 * density)`, so weighting by `p_sigma^2 * density` gives
+#' the most efficient fit. A larger exponent concentrates the fit more tightly
+#' on the dense regions of the covariate, which can be worth trying when the
+#' bias is estimated poorly in the tails.
 #'
 #' @section Contrasts:
 #' Responses are estimated one treatment at a time. Form a conditional average
 #' treatment effect by differencing two of them, which [hiv_contrast()] does.
 #'
 #' @details
-#' This estimator is assembled from the analysis script for paper 3 rather than
-#' from its function file. Its components, [conditional_p_sigma()] and
-#' [conditional_latr()], reproduce the originals exactly.
-#'
 #' Inference is by bootstrapping the whole procedure; there is no closed form.
 #'
 #' @export
