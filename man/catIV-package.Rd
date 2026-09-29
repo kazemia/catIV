@@ -29,30 +29,6 @@ population and \code{\link[=estimate_late]{estimate_late()}} the local average t
 }
 }
 
-\section{Function names used in the papers}{
-
-The published code for the three papers used different names. The mapping
-is:
-
-\tabular{lll}{
-\strong{Paper code}        \tab \strong{catIV}                       \tab \strong{Notes} \cr
-\code{GenerateA()}         \tab \code{\link[=adherence_sets]{adherence_sets()}}              \tab \cr
-\code{T_decider()}         \tab \code{\link[=choose_treatment]{choose_treatment()}}            \tab \cr
-\code{MakeR()}             \tab \code{\link[=response_matrix]{response_matrix()}}             \tab \cr
-\code{MakeKB()}            \tab \code{\link[=projection_matrices]{projection_matrices()}}         \tab list elements \code{B_t}, \code{B_t_i} are now \code{B}, \code{B_plus} \cr
-\code{KbSolver()}          \tab \code{\link[=solve_b_pairs]{solve_b_pairs()}}               \tab papers 1 and 2, indexed by treatment pairs \cr
-\code{KbSolver()}          \tab \code{\link[=solve_b_treatments]{solve_b_treatments()}}          \tab paper 3, indexed by single treatments \cr
-\code{PiIdentifier()}      \tab \code{\link[=target_populations]{target_populations()}}          \tab \cr
-\code{MakeP_Z()}           \tab \code{\link[=estimate_p_z]{estimate_p_z()}}                \tab \cr
-\code{MakeQ_Z()}           \tab \code{\link[=estimate_q_z]{estimate_q_z()}}                \tab \cr
-\code{MakeV_Z()}           \tab \code{\link[=estimate_v_z]{estimate_v_z()}}                \tab \cr
-\code{P_SigmaIdentifier()} \tab \code{\link[=estimate_p_sigma]{estimate_p_sigma()}}            \tab \code{E1}, \code{E2}, \code{WA} are now \code{arm1}, \code{arm2}, \code{average} \cr
-\code{P_SigmaIdentifier()} \tab \code{\link[=estimate_p_sigma_treatments]{estimate_p_sigma_treatments()}} \tab the paper 3 variant \cr
-\code{LATEIdentifier()}    \tab \code{\link[=estimate_late]{estimate_late()}}               \tab \code{RR} and \code{AverageProb} are now \code{scale} and \code{denominator} \cr
-\code{LATOIdentifier()}    \tab \code{\link[=estimate_latr]{estimate_latr()}}               \tab
-}
-}
-
 \section{Conventions}{
 
 \itemize{
