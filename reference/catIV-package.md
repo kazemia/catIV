@@ -36,29 +36,6 @@ A typical analysis runs through four stages:
     [`estimate_late()`](https://kazemia.github.io/catIV/reference/estimate_late.md)
     the local average treatment effects.
 
-## Function names used in the papers
-
-The published code for the three papers used different names. The
-mapping is:
-
-|  |  |  |
-|----|----|----|
-| **Paper code** | **catIV** | **Notes** |
-| `GenerateA()` | [`adherence_sets()`](https://kazemia.github.io/catIV/reference/adherence_sets.md) |  |
-| `T_decider()` | [`choose_treatment()`](https://kazemia.github.io/catIV/reference/choose_treatment.md) |  |
-| `MakeR()` | [`response_matrix()`](https://kazemia.github.io/catIV/reference/response_matrix.md) |  |
-| `MakeKB()` | [`projection_matrices()`](https://kazemia.github.io/catIV/reference/projection_matrices.md) | list elements `B_t`, `B_t_i` are now `B`, `B_plus` |
-| `KbSolver()` | [`solve_b_pairs()`](https://kazemia.github.io/catIV/reference/solve_b_pairs.md) | papers 1 and 2, indexed by treatment pairs |
-| `KbSolver()` | [`solve_b_treatments()`](https://kazemia.github.io/catIV/reference/solve_b_treatments.md) | paper 3, indexed by single treatments |
-| `PiIdentifier()` | [`target_populations()`](https://kazemia.github.io/catIV/reference/target_populations.md) |  |
-| `MakeP_Z()` | [`estimate_p_z()`](https://kazemia.github.io/catIV/reference/estimate_p_z.md) |  |
-| `MakeQ_Z()` | [`estimate_q_z()`](https://kazemia.github.io/catIV/reference/estimate_q_z.md) |  |
-| `MakeV_Z()` | [`estimate_v_z()`](https://kazemia.github.io/catIV/reference/estimate_v_z.md) |  |
-| `P_SigmaIdentifier()` | [`estimate_p_sigma()`](https://kazemia.github.io/catIV/reference/estimate_p_sigma.md) | `E1`, `E2`, `WA` are now `arm1`, `arm2`, `average` |
-| `P_SigmaIdentifier()` | [`estimate_p_sigma_treatments()`](https://kazemia.github.io/catIV/reference/estimate_p_sigma_treatments.md) | the paper 3 variant |
-| `LATEIdentifier()` | [`estimate_late()`](https://kazemia.github.io/catIV/reference/estimate_late.md) | `RR` and `AverageProb` are now `scale` and `denominator` |
-| `LATOIdentifier()` | [`estimate_latr()`](https://kazemia.github.io/catIV/reference/estimate_latr.md) |  |
-
 ## Conventions
 
 - `P_Z` and `Q_Z` are matrices with the instrument values as row names,
