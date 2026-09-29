@@ -164,58 +164,6 @@ bootstrap_late(200, d, "Z", "T", "Y", KB, b, n_cores = 2)$ci
   identification assumptions exactly; `simulate_categorical()` generates data
   that only approximately satisfies them, for testing robustness.
 
-## Function names used in the papers
-
-The published code for the three papers used different names.
-
-| Paper code | catIV | Notes |
-|---|---|---|
-| `GenerateA()` | `adherence_sets()` | |
-| `T_decider()` | `choose_treatment()` | |
-| `MakeR()` | `response_matrix()` | |
-| `MakeKB()` | `projection_matrices()` | list elements `B_t`, `B_t_i` are now `B`, `B_plus` |
-| `KbSolver()` | `solve_b_pairs()` | papers 1 and 2, indexed by treatment pairs |
-| `KbSolver()` | `solve_b_treatments()` | paper 3, indexed by single treatments |
-| `PiIdentifier()` | `target_populations()` | |
-| `MakeP_Z()` | `estimate_p_z()` | |
-| `MakeQ_Z()` | `estimate_q_z()` | |
-| `MakeV_Z()` | `estimate_v_z()` | |
-| `P_SigmaIdentifier()` | `estimate_p_sigma()` | `E1`, `E2`, `WA` are now `arm1`, `arm2`, `average` |
-| `P_SigmaIdentifier()` | `estimate_p_sigma_treatments()` | the paper 3 variant |
-| `LATEIdentifier()` | `estimate_late()` | `RR`, `AverageProb` are now `scale`, `denominator` |
-| `LATOIdentifier()` | `estimate_latr()` | |
-| `BSCICalculator()` | `bootstrap_late()` | `Data.complete = FALSE` is now just passing a list |
-| `PseudoPopulator()` | `pseudo_population()` | `Pi_index` is now `solution`, given by name |
-| `NaiveIV()` | `naive_iv()` | |
-| `Pi_prob_estimator()` | `conditional_p_sigma()` | |
-| `CIV_estimator()` | `conditional_latr()` | |
-| `Confounded_estimator()` | `confounded_response()` | |
-| `BinarySimulator()` | `simulate_binary()` | `OR` is now `logit` |
-| `CatSimulator()` (paper 1) | `simulate_adherence()` | |
-| `CatSimulator2()` (paper 1) | `simulate_categorical()` | paper 2's `CatSimulator()` is the same with `intercept = 0` |
-| `C_probability()` and friends | `binary_iv_truth()` | all four quantities from one marginalisation |
-
-## Differences from the published code
-
-Results are numerically identical to the paper code, verified against it
-across the designs in all three papers. A few conventions changed:
-
-- `P_Z` and `Q_Z` are matrices with instrument values as row names, rather
-  than data frames whose first column holds the instrument. Nothing depends on
-  column position.
-- The solvers always return a matrix; a contrast with no identifiable effect
-  gives a matrix with zero rows.
-- Solutions are named by the adherence sets they select, such as `"A4+A7"`.
-  Solution *order* therefore differs from the paper code, so index-based
-  references like `Pi_index = 1` do not carry over.
-- Every instrument value must be observed in the data. The paper code silently
-  produced a shorter `P_Z`.
-- `hiv_cate()` weights the bias regression by the covariate density to the
-  first power, as specified in paper 3. The analysis script used the density
-  squared; pass `density_power = 2` to reproduce those published numbers.
-- `binary_iv_truth()` marginalises every quantity over both confounders. The
-  paper 3 helper `T_probability()` omitted the observed confounder, which
-  `v_on_t = 0` reproduces.
 
 ## Licence
 
