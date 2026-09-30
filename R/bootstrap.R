@@ -1,3 +1,10 @@
+# Leave one core free so the session stays responsive. availableCores() knows
+# about cgroup and scheduler limits, which detectCores() does not, and returns
+# 2 under R CMD check.
+default_cores <- function() {
+  max(1L, parallelly::availableCores() - 1L)
+}
+
 #' Bootstrap confidence intervals for local average treatment effects
 #'
 #' Resamples the data with replacement, re-estimates `P_Z`, `Q_Z`, `P_Sigma`
@@ -14,10 +21,10 @@
 #' @param b Output of [solve_b_pairs()].
 #' @param alpha Two-sided error rate; the interval runs from the `alpha / 2` to
 #'   the `1 - alpha / 2` quantile.
-#' @param n_cores Number of worker processes. **This affects the numbers**: the
-#'   replicates are split into one chunk per worker, so the random number
-#'   streams, and hence the draws, depend on it. Fix it to reproduce a previous
-#'   run. The published analyses used 14.
+#' @param n_cores Number of worker processes. Defaults to one fewer than the
+#'   cores available to this session. This affects only how long the run takes:
+#'   each replicate draws from its own random number stream, so the estimates
+#'   are the same whatever `n_cores` is set to.
 #' @param cap If `TRUE`, discard replicates whose estimated effect lies outside
 #'   the observed range of the outcome before taking quantiles. Ratio
 #'   estimators with a small denominator occasionally produce extreme values,
@@ -43,6 +50,9 @@
 #' column of `ci` reports how many replicates each interval actually used, so
 #' that a badly behaved contrast is visible rather than silent.
 #'
+#' Given the same `seed`, the same data and the same number of replicates, the
+#' result does not depend on `n_cores` or on the machine it runs on.
+#'
 #' Called `BSCICalculator()` in the paper code, where the multiple-imputation
 #' case was selected with `Data.complete = FALSE`.
 #'
@@ -59,12 +69,13 @@
 #'           sample(c("a", "b"), 200, TRUE, c(0.3, 0.7))),
 #'   y = rbinom(400, 1, 0.5)
 #' )
-#' bootstrap_late(20, d, "z", "trt", "y", KB, b, n_cores = 1)$ci
+#' bootstrap_late(20, d, "z", "trt", "y", KB, b, n_cores = 2)$ci
 #' }
 #'
 #' @export
 bootstrap_late <- function(n, data, instrument, treatment, outcome,
-                           projections, b, alpha = 0.05, n_cores = 14,
+                           projections, b, alpha = 0.05,
+                           n_cores = default_cores(),
                            cap = FALSE, covariates = NULL, parametric = FALSE,
                            family = NULL, seed = 1234,
                            instrument_levels = NULL, treatments = NULL) {
@@ -104,24 +115,22 @@ bootstrap_late <- function(n, data, instrument, treatment, outcome,
   # library. Hand them the paths this session is using.
   parallel::clusterCall(cluster, function(paths) .libPaths(paths), .libPaths())
   doParallel::registerDoParallel(cluster)
-  doRNG::registerDoRNG(seed)
 
-  chunk <- NULL  # bound by foreach
-  draws <- list()
-  for (d in datasets) {
-    part <- foreach::foreach(
-      chunk = iterators::idiv(n, chunks = foreach::getDoParWorkers()),
-      .combine = "cbind", .packages = "catIV"
-    ) %dopar% {
-      # sapply collapses to a plain vector when only one effect is identified,
-      # which loses the row per effect. Restore the shape explicitly.
-      matrix(sapply(seq_len(chunk), replicate_once, d),
-             nrow = length(template),
-             dimnames = list(names(template), NULL))
-    }
-    draws[[length(draws) + 1L]] <- part
+  # One task per replicate, rather than one per worker. doRNG gives each
+  # foreach iteration its own random number stream, so a replicate draws the
+  # same resample whatever `n_cores` is. Splitting the work into one chunk per
+  # worker instead would tie the streams to the number of workers, and the
+  # estimates would depend on the machine they were computed on.
+  jobs <- expand.grid(replicate = seq_len(n), dataset = seq_along(datasets))
+  job <- NULL  # bound by foreach
+  draws <- foreach::foreach(
+    job = seq_len(nrow(jobs)), .combine = "cbind", .packages = "catIV",
+    .options.RNG = seed
+  ) %dorng% {
+    replicate_once(jobs$replicate[job], datasets[[jobs$dataset[job]]])
   }
-  draws <- do.call(cbind, draws)
+  draws <- matrix(draws, nrow = length(template),
+                  dimnames = list(names(template), NULL))
 
   replicates <- as.data.frame(t(draws))
   effect_range <- range(unlist(lapply(datasets, function(d) d[[outcome]])),

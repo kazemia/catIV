@@ -13,7 +13,7 @@ bootstrap_late(
   projections,
   b,
   alpha = 0.05,
-  n_cores = 14,
+  n_cores = default_cores(),
   cap = FALSE,
   covariates = NULL,
   parametric = FALSE,
@@ -40,10 +40,10 @@ each imputation and all replicates are pooled before taking quantiles.}
 \item{alpha}{Two-sided error rate; the interval runs from the \code{alpha / 2} to
 the \code{1 - alpha / 2} quantile.}
 
-\item{n_cores}{Number of worker processes. \strong{This affects the numbers}: the
-replicates are split into one chunk per worker, so the random number
-streams, and hence the draws, depend on it. Fix it to reproduce a previous
-run. The published analyses used 14.}
+\item{n_cores}{Number of worker processes. Defaults to one fewer than the
+cores available to this session. This affects only how long the run takes:
+each replicate draws from its own random number stream, so the estimates
+are the same whatever \code{n_cores} is set to.}
 
 \item{cap}{If \code{TRUE}, discard replicates whose estimated effect lies outside
 the observed range of the outcome before taking quantiles. Ratio
@@ -79,6 +79,9 @@ estimate, and are recorded as \code{NA} rather than aborting the run. The \code{
 column of \code{ci} reports how many replicates each interval actually used, so
 that a badly behaved contrast is visible rather than silent.
 
+Given the same \code{seed}, the same data and the same number of replicates, the
+result does not depend on \code{n_cores} or on the machine it runs on.
+
 Called \code{BSCICalculator()} in the paper code, where the multiple-imputation
 case was selected with \code{Data.complete = FALSE}.
 }
@@ -95,7 +98,7 @@ d <- data.frame(
           sample(c("a", "b"), 200, TRUE, c(0.3, 0.7))),
   y = rbinom(400, 1, 0.5)
 )
-bootstrap_late(20, d, "z", "trt", "y", KB, b, n_cores = 1)$ci
+bootstrap_late(20, d, "z", "trt", "y", KB, b, n_cores = 2)$ci
 }
 
 }

@@ -23,11 +23,11 @@ Imports:
     doParallel,
     doRNG,
     foreach,
-    iterators,
     MASS,
     marginaleffects,
     nnet,
     parallel,
+    parallelly,
     stats,
     utils
 Suggests:

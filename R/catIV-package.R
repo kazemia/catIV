@@ -32,5 +32,5 @@
 #'   `P_Z` line up with the rows of the response matrix.
 #'
 #' @keywords internal
-#' @importFrom foreach %dopar%
+#' @importFrom doRNG %dorng%
 "_PACKAGE"

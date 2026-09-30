@@ -117,7 +117,7 @@ test_that("bootstrap_late returns intervals that bracket the point estimate", {
   }
 })
 
-test_that("bootstrap_late is reproducible given the same seed and worker count", {
+test_that("bootstrap_late is reproducible given the same seed", {
   skip_on_cran()
   f <- boot_fit()
   a <- bootstrap_late(16, f$d, "z", "trt", "y", f$KB, f$b, n_cores = 2)
@@ -126,6 +126,18 @@ test_that("bootstrap_late is reproducible given the same seed and worker count",
   c3 <- bootstrap_late(16, f$d, "z", "trt", "y", f$KB, f$b, n_cores = 2,
                        seed = 99)
   expect_false(isTRUE(all.equal(a$replicates, c3$replicates)))
+})
+
+test_that("the result does not depend on how many workers are used", {
+  skip_on_cran()
+  # Each replicate draws from its own random number stream, so the number of
+  # workers is a performance setting and nothing more. Were the work split one
+  # chunk per worker instead, these would differ.
+  f <- boot_fit()
+  one <- bootstrap_late(12, f$d, "z", "trt", "y", f$KB, f$b, n_cores = 1)
+  two <- bootstrap_late(12, f$d, "z", "trt", "y", f$KB, f$b, n_cores = 2)
+  expect_equal(one$replicates, two$replicates)
+  expect_equal(one$ci, two$ci)
 })
 
 test_that("a single identified effect keeps its shape", {

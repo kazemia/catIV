@@ -96,9 +96,10 @@ round(bs$ci, 3)
 
 Three things worth knowing:
 
-- **`n_cores` changes the numbers.** Replicates are split one chunk per
-  worker, so the random number streams depend on how many workers there are.
-  Fix `n_cores` and `seed` together to reproduce a run.
+- **`n_cores` is a speed setting, nothing more.** Each replicate draws from
+  its own random number stream, so the same `seed` gives the same intervals
+  however many workers you use, and on whatever machine. It defaults to one
+  fewer than the cores available to your session.
 - **`n_kept` is not decoration.** A resample that loses an instrument value
   cannot be estimated and is recorded as `NA`. If `n_kept` is well below the
   number of replicates, the interval rests on less than it appears to.
