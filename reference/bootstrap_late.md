@@ -16,7 +16,7 @@ bootstrap_late(
   projections,
   b,
   alpha = 0.05,
-  n_cores = 14,
+  n_cores = default_cores(),
   cap = FALSE,
   covariates = NULL,
   parametric = FALSE,
@@ -61,10 +61,10 @@ bootstrap_late(
 
 - n_cores:
 
-  Number of worker processes. **This affects the numbers**: the
-  replicates are split into one chunk per worker, so the random number
-  streams, and hence the draws, depend on it. Fix it to reproduce a
-  previous run. The published analyses used 14.
+  Number of worker processes. Defaults to one fewer than the cores
+  available to this session. This affects only how long the run takes:
+  each replicate draws from its own random number stream, so the
+  estimates are the same whatever `n_cores` is set to.
 
 - cap:
 
@@ -116,6 +116,9 @@ to estimate, and are recorded as `NA` rather than aborting the run. The
 actually used, so that a badly behaved contrast is visible rather than
 silent.
 
+Given the same `seed`, the same data and the same number of replicates,
+the result does not depend on `n_cores` or on the machine it runs on.
+
 Called `BSCICalculator()` in the paper code, where the
 multiple-imputation case was selected with `Data.complete = FALSE`.
 
@@ -134,8 +137,8 @@ d <- data.frame(
           sample(c("a", "b"), 200, TRUE, c(0.3, 0.7))),
   y = rbinom(400, 1, 0.5)
 )
-bootstrap_late(20, d, "z", "trt", "y", KB, b, n_cores = 1)$ci
-#>            lower     upper n_kept
-#> a_b.A3 -0.420505 0.1950215     20
+bootstrap_late(20, d, "z", "trt", "y", KB, b, n_cores = 2)$ci
+#>             lower     upper n_kept
+#> a_b.A3 -0.2911172 0.1454478     20
 # }
 ```

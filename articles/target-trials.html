@@ -153,16 +153,17 @@ quantiles.</p>
 <code class="sourceCode R"><span><span class="va">bs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bootstrap_late.html">bootstrap_late</a></span><span class="op">(</span><span class="fl">300</span>, <span class="va">d</span>, <span class="st">"Z"</span>, <span class="st">"T"</span>, <span class="st">"Y"</span>, <span class="va">KB</span>, <span class="va">b</span>, n_cores <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">bs</span><span class="op">$</span><span class="va">ci</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                  lower  upper n_kept</span></span>
-<span><span class="co">#&gt; cheap_mid.A4+A7 -0.226 -0.042    300</span></span>
-<span><span class="co">#&gt; cheap_dear.A5   -0.441 -0.240    300</span></span>
-<span><span class="co">#&gt; mid_dear.A6+A7  -0.207 -0.044    300</span></span></code></pre></div>
+<span><span class="co">#&gt; cheap_mid.A4+A7 -0.250 -0.058    300</span></span>
+<span><span class="co">#&gt; cheap_dear.A5   -0.444 -0.233    300</span></span>
+<span><span class="co">#&gt; mid_dear.A6+A7  -0.213 -0.035    300</span></span></code></pre></div>
 <p>Three things worth knowing:</p>
 <ul>
 <li>
-<strong><code>n_cores</code> changes the numbers.</strong>
-Replicates are split one chunk per worker, so the random number streams
-depend on how many workers there are. Fix <code>n_cores</code> and
-<code>seed</code> together to reproduce a run.</li>
+<strong><code>n_cores</code> is a speed setting, nothing
+more.</strong> Each replicate draws from its own random number stream,
+so the same <code>seed</code> gives the same intervals however many
+workers you use, and on whatever machine. It defaults to one fewer than
+the cores available to your session.</li>
 <li>
 <strong><code>n_kept</code> is not decoration.</strong> A resample
 that loses an instrument value cannot be estimated and is recorded as

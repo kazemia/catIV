@@ -106,16 +106,17 @@ quantiles.
 bs <- bootstrap_late(300, d, "Z", "T", "Y", KB, b, n_cores = 2)
 round(bs$ci, 3)
 #>                  lower  upper n_kept
-#> cheap_mid.A4+A7 -0.226 -0.042    300
-#> cheap_dear.A5   -0.441 -0.240    300
-#> mid_dear.A6+A7  -0.207 -0.044    300
+#> cheap_mid.A4+A7 -0.250 -0.058    300
+#> cheap_dear.A5   -0.444 -0.233    300
+#> mid_dear.A6+A7  -0.213 -0.035    300
 ```
 
 Three things worth knowing:
 
-- **`n_cores` changes the numbers.** Replicates are split one chunk per
-  worker, so the random number streams depend on how many workers there
-  are. Fix `n_cores` and `seed` together to reproduce a run.
+- **`n_cores` is a speed setting, nothing more.** Each replicate draws
+  from its own random number stream, so the same `seed` gives the same
+  intervals however many workers you use, and on whatever machine. It
+  defaults to one fewer than the cores available to your session.
 - **`n_kept` is not decoration.** A resample that loses an instrument
   value cannot be estimated and is recorded as `NA`. If `n_kept` is well
   below the number of replicates, the interval rests on less than it

@@ -59,7 +59,7 @@ resulting distribution.</p>
 <span>  <span class="va">projections</span>,</span>
 <span>  <span class="va">b</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
-<span>  n_cores <span class="op">=</span> <span class="fl">14</span>,</span>
+<span>  n_cores <span class="op">=</span> <span class="fu">default_cores</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  cap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  covariates <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  parametric <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -103,10 +103,10 @@ the <code>1 - alpha / 2</code> quantile.</p></dd>
 
 
 <dt id="arg-n-cores">n_cores<a class="anchor" aria-label="anchor" href="#arg-n-cores"></a></dt>
-<dd><p>Number of worker processes. <strong>This affects the numbers</strong>: the
-replicates are split into one chunk per worker, so the random number
-streams, and hence the draws, depend on it. Fix it to reproduce a previous
-run. The published analyses used 14.</p></dd>
+<dd><p>Number of worker processes. Defaults to one fewer than the
+cores available to this session. This affects only how long the run takes:
+each replicate draws from its own random number stream, so the estimates
+are the same whatever <code>n_cores</code> is set to.</p></dd>
 
 
 <dt id="arg-cap">cap<a class="anchor" aria-label="anchor" href="#arg-cap"></a></dt>
@@ -151,6 +151,8 @@ of replicates each interval is based on.</p></dd>
 estimate, and are recorded as <code>NA</code> rather than aborting the run. The <code>n_kept</code>
 column of <code>ci</code> reports how many replicates each interval actually used, so
 that a badly behaved contrast is visible rather than silent.</p>
+<p>Given the same <code>seed</code>, the same data and the same number of replicates, the
+result does not depend on <code>n_cores</code> or on the machine it runs on.</p>
 <p>Called <code>BSCICalculator()</code> in the paper code, where the multiple-imputation
 case was selected with <code>Data.complete = FALSE</code>.</p>
     </div>
@@ -169,9 +171,9 @@ case was selected with <code>Data.complete = FALSE</code>.</p>
 <span class="r-in"><span>          <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span><span class="op">)</span>, <span class="fl">200</span>, <span class="cn">TRUE</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">0.7</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="fl">400</span>, <span class="fl">1</span>, <span class="fl">0.5</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">bootstrap_late</span><span class="op">(</span><span class="fl">20</span>, <span class="va">d</span>, <span class="st">"z"</span>, <span class="st">"trt"</span>, <span class="st">"y"</span>, <span class="va">KB</span>, <span class="va">b</span>, n_cores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">$</span><span class="va">ci</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            lower     upper n_kept</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> a_b.A3 -0.420505 0.1950215     20</span>
+<span class="r-in"><span><span class="fu">bootstrap_late</span><span class="op">(</span><span class="fl">20</span>, <span class="va">d</span>, <span class="st">"z"</span>, <span class="st">"trt"</span>, <span class="st">"y"</span>, <span class="va">KB</span>, <span class="va">b</span>, n_cores <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">$</span><span class="va">ci</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             lower     upper n_kept</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> a_b.A3 -0.2911172 0.1454478     20</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
