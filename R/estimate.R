@@ -110,6 +110,14 @@ estimate_p_z <- function(data, instrument, treatment, covariates = NULL,
   long <- marginaleffects::avg_predictions(model, variables = instrument)
   out <- widen_effects(long, instrument, "group", "estimate",
                        lv$instrument_levels, lv$treatments)
+
+  # With only two treatments the model reports the probability of the second
+  # level alone, so one column comes back empty. It is the complement of the
+  # rest, not zero.
+  empty <- colSums(is.na(out)) == nrow(out)
+  if (sum(empty) == 1L && length(lv$treatments) > 1L) {
+    out[, empty] <- 1 - rowSums(out[, !empty, drop = FALSE], na.rm = TRUE)
+  }
   out[is.na(out)] <- 0
   out
 }

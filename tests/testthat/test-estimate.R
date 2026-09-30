@@ -60,6 +60,46 @@ test_that("covariate adjustment is refused rather than silently ignored", {
   expect_error(estimate_q_z(d, "z", "trt", "y", parametric = TRUE), "`p_z`")
 })
 
+test_that("adjusted P_Z rows sum to one, including with two treatments", {
+  # A two-class multinomial reports the probability of the second level only,
+  # so the column for the first must be filled as its complement rather than
+  # left empty.
+  set.seed(9)
+  n <- 1200
+  for (treatments in list(c("ctrl", "trt"), c("a", "b", "c"),
+                          c("a", "b", "c", "d"))) {
+    d <- data.frame(z = sample(1:3, n, TRUE),
+                    trt = sample(treatments, n, TRUE),
+                    c = stats::rnorm(n), stringsAsFactors = FALSE)
+    p <- estimate_p_z(d, "z", "trt", covariates = "c", parametric = TRUE,
+                      instrument_levels = c("1", "2", "3"),
+                      treatments = treatments)
+    expect_identical(colnames(p), treatments)
+    expect_equal(unname(rowSums(p)), rep(1, 3))
+    expect_false(any(colSums(p) == 0))
+    expect_true(all(p >= 0 & p <= 1))
+  }
+})
+
+test_that("adjusted Q_Z divided by adjusted P_Z is a valid mean", {
+  set.seed(10)
+  n <- 1200
+  treatments <- c("ctrl", "trt")
+  d <- data.frame(z = sample(1:2, n, TRUE),
+                  trt = sample(treatments, n, TRUE),
+                  c = stats::rnorm(n), stringsAsFactors = FALSE)
+  d$y <- stats::rbinom(n, 1, 0.4)
+  p <- estimate_p_z(d, "z", "trt", covariates = "c", parametric = TRUE,
+                    instrument_levels = c("1", "2"), treatments = treatments)
+  q <- estimate_q_z(d, "z", "trt", "y", covariates = "c", parametric = TRUE,
+                    family = "binomial", p_z = p,
+                    instrument_levels = c("1", "2"), treatments = treatments)
+  # Q_Z / P_Z is an outcome probability, so it must lie in [0, 1]. A zero
+  # column in P_Z would make this non-finite.
+  expect_true(all(is.finite(q / p)))
+  expect_true(all(q / p >= 0 & q / p <= 1))
+})
+
 test_that("an unobserved instrument value is an error, not a short matrix", {
   expect_error(
     estimate_p_z(toy(), "z", "trt", instrument_levels = c("1", "2", "3")),

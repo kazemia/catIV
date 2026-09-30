@@ -143,7 +143,7 @@ simulate_categorical <- function(n, instrument, treatments, v_on_t, v_probs,
   z_index <- sample.int(length(instrument), size = n, replace = TRUE)
   z_value <- instrument[z_index]
 
-  v <- matrix(NA_real_, nrow = n, ncol = n_v)
+  v <- matrix(NA_integer_, nrow = n, ncol = n_v)
   for (j in seq_len(n_v)) v[, j] <- stats::rbinom(n, 1, v_probs[j])
 
   # Encouragement rank of each treatment under each drawn instrument value.
